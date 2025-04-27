@@ -54,5 +54,22 @@ def results(nickname, level, rating):
                            rating=rating)
 
 
+@app.route('/load_photo', methods=['POST', 'GET'])
+def load_photo():
+    global img
+    if request.method == 'GET':
+        return render_template('load_photo.html', img=img)
+    elif request.method == 'POST':
+        f = request.files['file']
+        img = 'static/img/' + f.filename
+        f.save(img)
+        return render_template('load_photo.html', img=img)
+
+
+@app.route("/carousel")
+def carousel():
+    return render_template("carousel.html")
+
+
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1')
